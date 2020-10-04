@@ -27,7 +27,7 @@ class Authenticate extends Middleware
         if(empty($user)){
             $response['resultCode'] = 1;
             $response['message'] = 'Need to login';
-            return response(json_encode($response), 500);
+            return response(json_encode($response), 200);
         }
         $user = (array) $user[0];
 

@@ -95,8 +95,9 @@ class AuthController extends Controller
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
         $following = json_encode(array());
-        $newUser = DB::insert("insert into users (name, email, password, following, followers)
-            values ('$name','$email', '$hashedPassword', '$following', '$following')");
+        $photos = json_encode(['large' => null, 'small' => null]);
+        $newUser = DB::insert("insert into users (name, email, password, following, followers, photos)
+            values ('$name','$email', '$hashedPassword', '$following', '$following', '$photos')");
 
         $response['resultCode'] = 0;
         $response['message'] = 'User has been created';

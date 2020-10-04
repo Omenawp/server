@@ -53,7 +53,7 @@ class UsersController extends Controller
 
         $key = array_search($following_id, $array_following);
         unset($array_following[$key]);
-        $array_following = array_values($array_following);
+        
         $following = json_encode($array_following);
 
         DB::update("update users set following='$following' where id='$id'");
@@ -84,8 +84,10 @@ class UsersController extends Controller
         $data = DB::select("select following from users where id='$id'");
         $array_following = json_decode($data[0]->following);
 
-        $data = DB::select("select id, name, email, status from users where
+        $data = DB::select("select id, name, email, status, photos from users where
             name like '%$search%' and id<>'$id' order by id limit $limit offset $offset");
+
+        $data[0]->photos = json_decode($data[0]->photos);
 
         $count = count($data);
         for($i = 0; $i < $count; $i++) {
