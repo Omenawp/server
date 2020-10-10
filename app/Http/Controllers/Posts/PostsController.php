@@ -18,6 +18,7 @@ class PostsController extends Controller
 
         if(!($extension == 'jpeg' || $extension == 'png')) {
             $response['resultCode'] = 1;
+            $response['meaasge'] = 'File type should be jpeg or png';
             return response($response, 200);
         }
 
@@ -134,14 +135,14 @@ class PostsController extends Controller
 
     public function allPosts(Request $request) {
         $id_current = $request->id;
-        $id = $this->getLastKey($request->path());
+        $id = $request->id_post;
 
         $limit = ($request->limit != '')? $request->limit : 10;
         $page = ($request->page != '')? $request->page : 1;
         $offset = $limit * ($page - 1);
 
         $request = ($id === 5) ? "" : "where id_user='$id'";
-        $data = DB::select("select * from posts " . $request . " order by id limit $limit offset $offset");
+        $data = DB::select("select * from posts " . $request . " order by added_on DESC limit $limit offset $offset");
 
         foreach($data as $post) {
             $likes = json_decode($post->likes);
@@ -151,6 +152,9 @@ class PostsController extends Controller
         }
 
         $response['resultCode'] = 0;
-        return response($data, 200);
+        $response['data'] = $data;
+        $response['count'] = DB::select("select count(*) from posts " . $request )[0]->count;
+
+        return response($response, 200);
     }
 }

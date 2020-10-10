@@ -22,7 +22,7 @@ class Authenticate extends Middleware
         $token = $check[1];
         $api_token = decrypt($token);
 
-        $user = DB::select("select * from users where api_token = '$api_token'");
+        $user = DB::select("select id from users where api_token = '$api_token'");
 
         if(empty($user)){
             $response['resultCode'] = 1;

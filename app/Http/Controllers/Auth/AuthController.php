@@ -44,8 +44,6 @@ class AuthController extends Controller
         $response['resultCode'] = 0;
         $response['token'] = $token;
         return response($response, 200);
-        //->withHeaders(['Access-Control-Allow-Origin' => 'http://localhost:3000', 'Access-Control-Allow-Credentials' => 'true']);
-
     }
 
     public function logout(Request $request) {
@@ -96,6 +94,7 @@ class AuthController extends Controller
 
         $following = json_encode(array());
         $photos = json_encode(['large' => null, 'small' => null]);
+        
         $newUser = DB::insert("insert into users (name, email, password, following, followers, photos)
             values ('$name','$email', '$hashedPassword', '$following', '$following', '$photos')");
 

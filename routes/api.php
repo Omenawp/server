@@ -26,5 +26,5 @@ Route::middleware('auth:api')->delete('post/{id_post}', 'Posts\PostsController@d
 Route::middleware('auth:api')->post('like/{id}', 'Posts\PostsController@likePost');
 Route::middleware('auth:api')->delete('like/{id}', 'Posts\PostsController@dislikePost');
 
-Route::middleware('auth:api')->get('posts/{id}', 'Posts\PostsController@allPosts');
+Route::middleware('auth:api')->get('posts', 'Posts\PostsController@allPosts');
 
